@@ -1,0 +1,33 @@
+# This workflow does a clean install of Node.js and the dependencies for this project,
+# and then deploys this create-react-app project to GitHub Pages.
+name: GitHub Pages create-react-app Deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy a create-react-app to GitHub Pages with Node ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run-script build
+    - run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/bhegde8/omdb-search-app.git
+        npx gh-pages -x -d build -u "github-actions-bot <support+actions@github.com>"
