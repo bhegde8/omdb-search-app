@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Card, CardActions, CardActionArea, CardMedia, CardContent, Container, 
-         Typography, Button } from '@material-ui/core';
+import { Card, CardActions, CardActionArea, CardMedia, CardContent, Typography,
+         Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 
