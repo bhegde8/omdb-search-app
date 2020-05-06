@@ -1,4 +1,10 @@
-import React from 'react';
+/**
+ * This is the search box component.
+ */
+import React, { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { fetchMovies } from '../../store/moviesSlice';
 
 import { Container, Typography, Grid, Button, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,6 +12,8 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import styles from './SearchBox.module.css';
 
+// To match the app's color scheme, use a text field
+// with a red outline for the search box (instead of a white outline)
 const RedTextField = withStyles({
   root: {
     '& .MuiOutlinedInput-root': {
@@ -22,33 +30,52 @@ const RedTextField = withStyles({
   },
 })(TextField);
 
+
 export default function SearchBox() {
+  const [query, setQuery] = useState(''); // Contains the query typed in the search field
+  const dispatch = useDispatch();
 
   return (
     <React.Fragment>
       <div className={styles.containerParent}>
         <Container className={styles.container} maxWidth="md">
 
-              <Typography variant="h3" align="center" color="textPrimary" gutterBottom>
-                OMDb Search
-              </Typography>
+          <Typography variant="h3" align="center" color="textPrimary" gutterBottom>
+            OMDb Search
+          </Typography>
 
-              <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                Search for a movie title using the box below. Results from the OMDb
-                will be returned.
-              </Typography>
+          <Typography variant="h6" align="center" color="textSecondary" paragraph>
+            Search for a movie title using the box below. Results from the OMDb
+            will be returned.
+          </Typography>
 
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                <RedTextField variant="outlined" size="small" />
-
-                </Grid>
-                <Grid item>
-                  <Button variant="contained" color="primary" startIcon={<SearchIcon />}>
-                    Search
-                  </Button>
-                </Grid>
-              </Grid>
+          <Grid container spacing={2} justify="center">
+            <Grid item>
+              <RedTextField
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyPress={(e) => {
+                  // For convenience, if the user presses the Enter key inside the search box,
+                  // fetch the movie results.
+                  if(e.key === 'Enter') {
+                    dispatch(fetchMovies(query));  
+                  }
+                }}
+                variant="outlined"
+                size="small"
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<SearchIcon />}
+                onClick={() => dispatch(fetchMovies(query))}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
               
         </Container>
       </div>
