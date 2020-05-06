@@ -8,7 +8,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-const omdbUrl = 'http://omdbapi.com/'; // The URL to use for the OMDb API
+const omdbUrl = 'https://omdbapi.com/'; // The URL to use for the OMDb API
 
 // Note: the reducers below are wrapped with Immer so that they do
 // not actually mutate the state, and are treated as immutable actions.
