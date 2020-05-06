@@ -1,3 +1,7 @@
+/**
+ * The root component of this web app.
+ */
+
 import React from 'react';
 
 import styles from './App.css';
@@ -10,6 +14,9 @@ import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
+
+// Use the default dark theme provided by Material-UI with red
+// as the primary color
 const darkMode = createMuiTheme({
   palette: {
     type: 'dark',
